@@ -1,0 +1,6 @@
+-- =====================================================
+-- Query: Customer Lifecycle Analysis
+-- Description: This query identifies cities whose total sales are above the average total sales
+--across all cities.
+-- Tables Used: ORDERS, ADDRESS, CITIES
+-- =====================================================
