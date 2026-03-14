@@ -1,0 +1,6 @@
+-- =====================================================
+-- Query: Cities Above Average Total Sales
+-- Description: This query identifies cities whose total sales are above the average total sales
+--across all users.
+-- Tables Used: ORDERS, USERS
+-- =====================================================
