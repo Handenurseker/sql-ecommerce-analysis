@@ -5,32 +5,32 @@
 -- Tables Used: ORDERS, ADDRESS, CITIES
 -- =====================================================
 
-SELECT T.CityID, T.TotalSalesCity, 
-(T.TotalSalesCity 
+SELECT T.CityID, T.CityName, T.TotalSales, 
+(T.TotalSales 
   / 
-(SELECT SUM(T.TotalSalesCity) FROM
+(SELECT SUM(X.TotalSales) FROM
 	(
-  	SELECT C.ID AS CityID, SUM(O.TOTALPRICE) AS TotalSalesCity FROM ORDERS O 
+  	SELECT C.ID AS CityID, C.CITY AS CityName, SUM(O.TOTALPRICE) AS TotalSales FROM ORDERS O 
   	JOIN ADDRESS A ON A.ID=O.ADDRESSID
   	JOIN CITIES C ON C.ID=A.CITYID
-  	GROUP BY C.ID
-	) AS T
+  	GROUP BY C.ID, C.CITY
+	) AS X
 ) *100) AS SalesPercentage
 FROM
 (
-  SELECT C.ID AS CityID, SUM(O.TOTALPRICE) AS TotalSalesCity FROM ORDERS O 
+  SELECT C.ID AS CityID, C.CITY AS CityName, SUM(O.TOTALPRICE) AS TotalSales FROM ORDERS O 
   JOIN ADDRESS A ON A.ID=O.ADDRESSID
   JOIN CITIES C ON C.ID=A.CITYID
-  GROUP BY C.ID
+  GROUP BY C.ID, C.CITY
 ) AS T
 WHERE 
-(T.TotalSalesCity / 
-(SELECT SUM(T.TotalSalesCity) FROM
+(T.TotalSales / 
+(SELECT SUM(X.TotalSales) FROM
 	(
-  	SELECT C.ID AS CityID, SUM(O.TOTALPRICE) AS TotalSalesCity FROM ORDERS O 
+  	SELECT C.ID AS CityID, C.CITY AS CityName, SUM(O.TOTALPRICE) AS TotalSales FROM ORDERS O 
   	JOIN ADDRESS A ON A.ID=O.ADDRESSID
   	JOIN CITIES C ON C.ID=A.CITYID
-  	GROUP BY C.ID
-	) AS T
+  	GROUP BY C.ID, C.CITY
+	) AS X
 ) *100)>5
 ORDER BY T.CityID
